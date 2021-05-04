@@ -1,0 +1,74 @@
+.search-form {
+  padding: 0 5%;
+}
+
+.search-box {
+  border: 1px solid #ccc;
+  padding: 10px 0;
+  display: grid;
+  grid-template: auto / auto 50px 50px;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.search-box--with-suggestions:focus-within, .suggest-list:active ~ .search-box--with-suggestions {
+  border-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+header .search-box {
+  border: 0;
+  background: rgb(255 255 255 / 50%);
+}
+
+.search-input {
+  border: 0;
+}
+
+.current-location-btn {
+  border-right: 1px solid #ccc;
+}
+
+.suggest-list {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 0;
+  position: absolute;
+  z-index: 999;
+  width: calc(90% - 27px);
+  opacity: 0;
+  color: #444;
+  transition: all 0.3s;
+}
+
+.suggest-list--active {
+  border: solid 1px #ccc;
+  border-top: 0;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background: #fff;
+}
+
+.App-header .suggest-list {
+  width: calc(100% - 100px);
+}
+
+.search-box:focus-within + .suggest-list, .suggest-list:active {
+  height: auto;
+  max-height: 300px;
+  overflow-y: auto;
+  opacity: 1;
+}
+
+.suggest-list__item {
+  list-style: none;
+  padding: 10px;
+  cursor: pointer;
+  display: block;
+}
+
+.suggest-list__item:hover {
+  background: #eee;
+}

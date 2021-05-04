@@ -1,0 +1,13 @@
+.weather-widget {
+  min-width: 220px;
+  border: 1px solid #ccc;
+  display: grid;
+  grid-template: auto / auto 50px;
+  align-items: end;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px;
+  flex: 1 0 30%;
+  text-decoration: none;
+  color: #444;
+}

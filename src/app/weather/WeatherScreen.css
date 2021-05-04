@@ -1,0 +1,415 @@
+.scroll-container {
+  width: 100%;
+  overflow: auto;
+}
+
+/* Weather Summary section */
+.weather-summary {
+  text-align: center;
+  margin-top: 11vh;
+  transition: all 0.3s;
+}
+
+@media (min-height: 600px) {
+  .weather-summary.show-more {
+    margin-top: 0;
+  }
+}
+
+@media(min-width: 1024px) {
+  .weather-summary {
+    margin-top: 15vh;
+  }
+}
+
+.weather-summary .temp-range {
+  display: inline-block;
+}
+
+.weather-summary .current-temp {
+  font-size: 5em;
+  font-weight: 300;
+  display: inline-block;
+  min-width: 50%;
+  margin: 10px 20px;
+}
+
+@media (min-width: 375px) {
+  .weather-summary .current-temp {
+    font-size: 6em;
+  }
+}
+
+.weather-summary .weather-icon {
+  margin-left: 10px;
+  width: 50px;
+  vertical-align: middle;
+}
+
+/* Weather Details section */
+.weather-details {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-areas: 
+    "current"
+    "hourly"
+    "daily";
+    align-items: start;
+  width: 100vw;
+  color: #444;
+  position: relative;
+  z-index: 3;
+  margin-top: 25vh;
+  margin-left: -15px;
+  padding-bottom: 20px;
+  background-image: linear-gradient(rgb(255 255 255 / 88%), #ffffff);
+  transition: all 0.3s;
+}
+
+@media (min-height: 600px) {
+  .weather-details.show-more {
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+@media(min-width: 768px) {
+  .weather-details {
+    grid-template-columns: 50% 50%;
+    grid-template-areas: 
+    "current current"
+    "hourly daily";
+  }
+}
+
+@media(min-width: 1400px) {
+  .weather-details {
+    margin-top: 32vh;
+  }
+}
+
+.show-more-btn {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: -20px;
+  left: calc(50% - 5px);
+  border: solid 2px #aaa;
+  border-bottom: 0;
+  border-right: 0;
+  transform: rotate(45deg);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.show-more-btn:hover, .show-more-btn:focus {
+  border-color: #666;
+}
+
+.show-more-btn.show-more {
+  transform: rotate(225deg);
+}
+
+@media (max-height: 600px) {
+  .show-more-btn {
+    display: none;
+  }
+}
+
+@media(min-width: 768px) {
+  .show-more-btn {
+    top: -40px;
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media(min-width: 1024px) {
+  .show-more-btn {
+    top: -60px;
+  }
+}
+
+.section_label {
+  font-weight: 500;
+}
+
+/* Wavy borders */
+.wavy-border-container {
+  display: inline-block;
+  position: absolute;
+  width: 100%;
+  padding-bottom: 25%;
+  vertical-align: middle;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  margin-top: -25%;
+}
+
+svg.wavy-border {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Current weather stats section */
+.weather-current {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  justify-content: center;
+  grid-area: current;
+  padding: 10px 20px;
+}
+
+.weather-current .weather-stat {
+  min-width: 150px;
+  margin: 10px 0;
+}
+
+@media(min-width: 768px) {
+  .weather-current .weather-stat {
+    min-width: 200px;
+  }
+}
+
+.weather-current .save-location-button {
+  position: absolute;
+  right: 30px;
+  top: -50px;
+}
+
+/* Hourly Forecast section */
+.hourly-forecast {
+  grid-area: hourly;
+  padding: 10px 20px;
+}
+
+/* Daily Forecast section */
+.daily-forecast {
+  grid-area: daily;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.daily-forecast:before, .daily-forecast:after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  top: calc(50% + 20px);
+  left: 20px;
+  border: solid 2px #ddd;
+  border-bottom: 0;
+  border-right: 0;
+  transform: rotate( -45deg);
+  cursor: pointer;
+}
+
+.daily-forecast:after {
+  left: auto;
+  right: 20px;
+  transform: rotate( 135deg);
+}
+
+.daily-forecast__list {
+  padding: 0;
+  margin: 0;
+  width: max-content;
+}
+
+.daily-forecast__item {
+  list-style: none;
+  display: inline-block;
+  width: 60px;
+  text-align: center;
+  margin: 0 10px;
+}
+
+.daily-forecast__icon {
+  width: 100%;
+}
+
+/* Background */
+.bg-dawn {
+  background-image: linear-gradient(rgba(70,40,102,1) 0%, rgba(174,90,87,1) 40%, rgba(251,125,77,1) 70%);
+  color: #fff;
+}
+
+.bg-sunrise {
+  background-image: linear-gradient(rgba(95,144,227,1) 0%, rgba(255,198,112,1) 50%, rgba(255,235,145,1) 80%);
+  color: #fff;
+}
+
+.bg-morning {
+  background-image: linear-gradient(rgba(89,185,242,1) 0%, rgba(217,241,241,1) 60%);
+}
+
+.bg-afternoon {
+  background-image: linear-gradient(rgba(45,161,241,1) 0%, rgba(174,234,255,1) 60%);
+}
+
+.bg-sunset {
+  background-image: linear-gradient(rgba(103,51,144,1) 0%, rgba(224,88,39,1) 50%, rgba(255,189,52,1) 80%);
+  color: #fff;
+}
+
+.bg-dusk {
+  background-image: linear-gradient(rgba(42,50,128,1) 0%, rgba(170,79,84,1) 30%, rgba(228,122,48,1) 70%);
+  color: #fff;
+}
+
+.bg-night {
+  background-image: linear-gradient(rgba(6, 10, 19,1) 0%, rgba(28,75,139,1) 70%);
+  color: #fff;
+}
+
+.bg-storm {
+  background-image: linear-gradient(rgba(84,100,121,1) 0%, rgba(184,194,207,1) 70%);
+  color: #fff;
+}
+
+.bg-rain:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgb(0 0 0 / 20%);
+  z-index: 0;
+}
+
+/* Rain effect */
+.rain {
+  position: absolute;
+  left: 0;
+  width: 90%;
+  height: 80%;
+  z-index: 2;
+}
+
+.rain.back-row {
+  z-index: 1;
+  bottom: 60px;
+  opacity: 0.5;
+}
+
+.screen.back-row-toggle .rain.back-row {
+  display: block;
+}
+
+.drop {
+  position: absolute;
+  bottom: 100%;
+  width: 15px;
+  height: 120px;
+  pointer-events: none;
+  animation: drop 0.5s linear infinite;
+}
+
+@keyframes drop {
+  0% {
+    transform: translateY(0vh);
+  }
+  75% {
+    transform: translateY(90vh);
+  }
+  100% {
+    transform: translateY(90vh);
+  }
+}
+
+.stem {
+  width: 1px;
+  height: 60%;
+  margin-left: 7px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.25));
+  animation: stem 0.5s linear infinite;
+}
+
+@keyframes stem {
+  0% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.splat {
+  width: 15px;
+  height: 10px;
+  border-top: 2px dotted rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  opacity: 1;
+  transform: scale(0);
+  animation: splat 0.5s linear infinite;
+  display: none;
+}
+
+.screen.splat-toggle .splat {
+  display: block;
+}
+
+@keyframes splat {
+  0% {
+    opacity: 1;
+    transform: scale(0);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(0);
+  }
+  90% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+.screen.single-toggle .drop {
+  display: none;
+}
+
+.screen.single-toggle .drop:nth-child(10) {
+  display: block;
+}
+
+/* Snow effect */
+.snowflake {
+  color: #fff;
+  font-size: 1em;
+  font-family: Arial;
+  text-shadow: 0 0 1px #000;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.snowflake--big {
+  width: 10px;
+  height: 10px;
+}
+
+@-webkit-keyframes snowflakes-fall{0%{top:-10%}100%{top:100%}}
+@-webkit-keyframes snowflakes-shake{0%{-webkit-transform:translateX(0px);transform:translateX(0px)}50%{-webkit-transform:translateX(80px);transform:translateX(80px)}100%{-webkit-transform:translateX(0px);transform:translateX(0px)}}
+@keyframes snowflakes-fall{0%{top:-10%}100%{top:100%}}
+@keyframes snowflakes-shake{0%{transform:translateX(0px)}50%{transform:translateX(80px)}100%{transform:translateX(0px)}}.snowflake{position:fixed;top:-10%;z-index:9999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:default;-webkit-animation-name:snowflakes-fall,snowflakes-shake;-webkit-animation-duration:10s,3s;-webkit-animation-timing-function:linear,ease-in-out;-webkit-animation-iteration-count:infinite,infinite;-webkit-animation-play-state:running,running;animation-name:snowflakes-fall,snowflakes-shake;animation-duration:10s,3s;animation-timing-function:linear,ease-in-out;animation-iteration-count:infinite,infinite;animation-play-state:running,running}.snowflake:nth-of-type(0){left:1%;-webkit-animation-delay:0s,0s;animation-delay:0s,0s}.snowflake:nth-of-type(1){left:10%;-webkit-animation-delay:1s,1s;animation-delay:1s,1s}.snowflake:nth-of-type(2){left:20%;-webkit-animation-delay:6s,.5s;animation-delay:6s,.5s}.snowflake:nth-of-type(3){left:30%;-webkit-animation-delay:4s,2s;animation-delay:4s,2s}.snowflake:nth-of-type(4){left:40%;-webkit-animation-delay:2s,2s;animation-delay:2s,2s}.snowflake:nth-of-type(5){left:50%;-webkit-animation-delay:8s,3s;animation-delay:8s,3s}.snowflake:nth-of-type(6){left:60%;-webkit-animation-delay:6s,2s;animation-delay:6s,2s}.snowflake:nth-of-type(7){left:70%;-webkit-animation-delay:2.5s,1s;animation-delay:2.5s,1s}.snowflake:nth-of-type(8){left:80%;-webkit-animation-delay:1s,0s;animation-delay:1s,0s}.snowflake:nth-of-type(9){left:90%;-webkit-animation-delay:3s,1.5s;animation-delay:3s,1.5s}
+
+/* added small blur every 6 snowflakes*/
+.snowflake:nth-child(3n) {
+  filter: blur(2px);
+}
