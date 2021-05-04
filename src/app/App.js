@@ -1,5 +1,5 @@
 import React, { Component, Suspense, lazy } from 'react'
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { HashRouter as Router, Route } from "react-router-dom"
 import './App.css'
 import Header from './common/Header'
 import Loading from './common/Loading'
