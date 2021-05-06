@@ -155,38 +155,36 @@ function WeatherScreen(props) {
           {location.hourly.length &&
             <section className="hourly-forecast">
               <h3 className="section_label">Forecast</h3>
-              <div className="scroll-container">
-                <VictoryChart
-                  domainPadding={{ y: 10 }}
-                  padding={{ top: 40, right: 20, bottom: 40, left: 20 }}
-                  containerComponent={
-                    <VictoryContainer style={{
-                      pointerEvents: "auto",
-                      userSelect: "auto",
-                      touchAction: "auto"
-                    }} />
-                  }
-                  height={150}
-                >
-                  <VictoryAxis />
-                  <VictoryLine
-                    style={{
-                      data: { stroke: "#c43a31" }
-                    }}
-                    interpolation="natural"
-                    data={
-                      location.hourly.map(hour => {
-                        let time = DateTime.fromJSDate(new Date(hour.dt * 1000)).setZone(location.timezone).hour
-                        return ({
-                          x: time > 12 ? `${time - 12}pm` : `${time}am`,
-                          y: Math.round(hour.temp)
-                        })
+              <VictoryChart
+                domainPadding={{ y: 10 }}
+                padding={{ top: 40, right: 20, bottom: 40, left: 20 }}
+                containerComponent={
+                  <VictoryContainer style={{
+                    pointerEvents: "auto",
+                    userSelect: "auto",
+                    touchAction: "auto"
+                  }} />
+                }
+                height={150}
+              >
+                <VictoryAxis />
+                <VictoryLine
+                  style={{
+                    data: { stroke: "#c43a31" }
+                  }}
+                  interpolation="natural"
+                  data={
+                    location.hourly.map(hour => {
+                      let time = DateTime.fromJSDate(new Date(hour.dt * 1000)).setZone(location.timezone).hour
+                      return ({
+                        x: time > 12 ? `${time - 12}pm` : `${time}am`,
+                        y: Math.round(hour.temp)
                       })
-                    }
-                    labels={({ datum }) => datum.y + '\xB0'}
-                  />
-                </VictoryChart>
-              </div>
+                    })
+                  }
+                  labels={({ datum }) => datum.y + '\xB0'}
+                />
+              </VictoryChart>
             </section>
           }
 

@@ -44,9 +44,15 @@ small {
 
 header {
   display: grid;
-  grid-template: auto / 70px auto;
+  grid-template: auto / 60px auto;
   width: calc(100vw - 30px);
   z-index: 9;
+}
+
+@media (min-width: 375px) {
+  header {
+    grid-template: auto / 70px auto;
+  }
 }
 
 header .search-form {
