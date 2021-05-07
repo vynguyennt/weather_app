@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import { DateTime } from 'luxon'
 import { VictoryChart, VictoryLine, VictoryContainer, VictoryAxis } from 'victory'
 import { makeItRain, makeItSnow, makeItClear, capitalizeText } from '../common/Utils'
-
 import './WeatherScreen.css'
 
 function WeatherScreen(props) {
@@ -12,7 +11,7 @@ function WeatherScreen(props) {
   let [location, setLocation] = useState({
     lat: 0,
     lon: 0,
-    timezone: 0,
+    timezone: '',
     timezone_offset: 0,
     current: {
       dt: 0,
@@ -41,9 +40,11 @@ function WeatherScreen(props) {
     daily: []
   })
   let [isScrollable, setIsScrollable] = useState(true)
+  let [isFavorite, setIsFavorite] = useState(checkIsFavorite)
   const screenEl = useRef(null) 
 
   useEffect(() => {
+    setIsFavorite(checkIsFavorite())
     makeItClear()
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,alerts&appid=dd7b078955b9a8f743b67fdd8db9a012&units=metric`)
       .then(res => res.json())
@@ -53,6 +54,7 @@ function WeatherScreen(props) {
         } else {
           setNoResult(false)
           data.hourly = data.hourly.filter((e, i, a) => (i % 2 === 0)).slice(0, 7)
+          data.timezone = 'UTC' + ((data.timezone_offset/3600) >= 0 ? '+' : '') + Math.floor(data.timezone_offset/3600)
           setLocation(data)
           if (data.current.rain) makeItRain()
           if (data.current.snow) makeItSnow()
@@ -68,9 +70,37 @@ function WeatherScreen(props) {
       .catch(error => console.log(error))
   }, [props.searchValue, lat, lon])
 
-  function addFavorite(id, event) {
+  function checkIsFavorite() {
+    let favoriteLocations = JSON.parse(window.localStorage.getItem('favoriteLocations')) || []
+    for(let loc of favoriteLocations) {
+      if (loc.lat == lat && loc.lon == lon) {
+        return true
+      }
+    }
+    return false
+  }
+
+  function updateFavorite(event) {
     event.preventDefault()
-    console.log('Update favorite: ' + id)
+    let favoriteLocations = JSON.parse(window.localStorage.getItem('favoriteLocations')) || []
+    if (!isFavorite) {
+      favoriteLocations.push({name, lat, lon})
+      window.localStorage.setItem('favoriteLocations', JSON.stringify(favoriteLocations))
+      setIsFavorite(true)
+    } else {
+      let removePosition = -1
+      for (let i = 0; i < favoriteLocations.length; i++) {
+        if (favoriteLocations[i].lat == lat && favoriteLocations[i].lon == lon) {
+          removePosition = i
+          break
+        }
+      }
+      if (removePosition >= 0) {
+        favoriteLocations.splice(removePosition, 1)
+        window.localStorage.setItem('favoriteLocations', JSON.stringify(favoriteLocations))
+      }
+      setIsFavorite(false)
+    }
   }
 
   function toggleMoreDetails() {
@@ -107,43 +137,33 @@ function WeatherScreen(props) {
           </h3>
         </section>
         <section className={'weather-details ' + (isScrollable ? '' : 'show-more')}>
-          <div className="wavy-border-container">
-            <svg className="wavy-border" viewBox="0 0 500 150"
-              preserveAspectRatio="xMinYMin meet"
-              style={{zIndex: -2}}>
-              <path d="M0, 50 C150, 120 350,  0 500, 70 L500, 250 L0, 250 Z" 
-              style={{stroke: 'none', fill: 'rgba(255, 255, 255, 0.5)'}}></path>
-            </svg>
-          </div>
-
-          <div className="wavy-border-container">
-            <svg className="wavy-border" viewBox="0 0 500 150"
-              preserveAspectRatio="xMinYMin meet"
-              style={{zIndex: -1}}>
-              <path d="M0, 30 C300, 0 400,   200 500, 20 L500, 250 L0, 250 Z" 
-              style={{stroke: 'none', fill: 'rgba(255, 255, 255, 0.5)'}}></path>
-            </svg>
-          </div>
-
-          <div className="wavy-border-container">
-            <svg className="wavy-border" viewBox="0 0 500 150"
-              preserveAspectRatio="xMinYMin meet"
-              style={{zIndex: -3}}>
-              <path d="M0, 50 C150, 200 350,  0 500, 50 L500, 250 L0, 250 Z" 
-              style={{stroke: 'none', fill: 'rgba(255, 255, 255, 0.5)'}}></path>
-            </svg>
-          </div>
+          {
+            [
+              'M0, 50 C150, 120 350,  0 500, 70 L500, 250 L0, 250 Z',
+              'M0, 30 C300, 0 400,   200 500, 20 L500, 250 L0, 250 Z',
+              'M0, 50 C150, 200 350,  0 500, 50 L500, 250 L0, 250 Z'
+            ].map((path, index) => (
+              <div className="wavy-border-container" key={index}>
+                <svg className="wavy-border" viewBox="0 0 500 150"
+                  preserveAspectRatio="xMinYMin meet"
+                  style={{zIndex: -1}}>
+                  <path d={path} 
+                  style={{stroke: 'none', fill: 'rgba(255, 255, 255, 0.5)'}}></path>
+                </svg>
+              </div>
+            ))
+          }
 
           <div className={'show-more-btn ' + (isScrollable ? '' : 'hidden')} onClick={toggleMoreDetails}></div>
+          <button type="button" className="icon-btn save-location-btn" onClick={updateFavorite}>
+            {isFavorite ? (
+              <i className="material-icons">favorite</i>
+            ) : (
+              <i className="material-icons">favorite_border</i>
+            )}
+          </button>
 
           <section className="weather-current">
-            <button type="button" className="icon-btn save-location-button hidden" onClick={(e) => addFavorite(location.lat + location.lon, e)}>
-              {props.favorited ? (
-                <i className="material-icons">favorite</i>
-              ) : (
-                  <i className="material-icons">favorite_border</i>
-                )}
-            </button>
             <div className="weather-stat"><span>Humidity:</span> {location.current.humidity || 0} %</div>
             <div className="weather-stat"><span>Pressure:</span> {location.current.pressure || 0} hPa</div>
             <div className="weather-stat"><span>Wind:</span> {location.current.wind_speed || 0} m/s</div>

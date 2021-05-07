@@ -1,13 +1,55 @@
 .weather-widget {
-  min-width: 220px;
-  border: 1px solid #ccc;
+  min-width: 300px;
+  min-height: 120px;
   display: grid;
   grid-template: auto / auto 50px;
   align-items: end;
-  padding: 10px;
+  padding: 15px 20px;
   border-radius: 8px;
   margin: 10px;
   flex: 1 0 30%;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 15%);
+}
+
+.weather-widget__status{
+  align-self: start;
+  z-index: 1;
+  margin-top: -10px;
+  margin-left: -10px;
+}
+
+.weather-status__icon {
+  width: 50px;
+}
+
+.weather-widget__btn{
+  place-self: start end;
   color: #444;
+}
+
+.weather-widget__temperature {
+  justify-self: end;
+}
+
+.weather-widget__location {
+  z-index: 1;
+  color: #444;
+}
+
+.weather-widget__city {
+  margin: 0;
+}
+
+.vertical-wavy-border-container {
+  position: absolute;
+  height: 100%;
+  width: 80%;
+}
+
+.vertical-wavy-border {
+  min-height: 100%;
+  width: 100%;
 }

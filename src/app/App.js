@@ -1,10 +1,12 @@
 import React, { Component, Suspense, lazy } from 'react'
 import { HashRouter as Router, Route } from "react-router-dom"
 import './App.css'
+import { makeItStarry } from './common/Utils'
 import Header from './common/Header'
 import Loading from './common/Loading'
 const StartScreen = lazy(() => import('./start/StartScreen'))
 const WeatherScreen = lazy(() => import('./weather/WeatherScreen'))
+const FavoriteScreen = lazy(() => import('./favorite/FavoriteScreen'))
 
 class App extends Component {
   constructor(props) {
@@ -28,6 +30,10 @@ class App extends Component {
     console.log(error, errorInfo);
   }
 
+  componentDidMount() {
+    makeItStarry('starfield')
+  }
+
   setSearchValue = (value) => {
     this.setState({searchValue: value})
   }
@@ -42,9 +48,9 @@ class App extends Component {
       this.setState({time: 'dawn'})
     } else if (time === sunrise) {
       this.setState({time: 'sunrise'})
-    } else if (time <= 12) {
+    } else if (time > sunrise && time <= 12) {
       this.setState({time: 'morning'})
-    } else if (time < sunset) {
+    } else if (time > 12 && time < sunset) {
       this.setState({time: 'afternoon'})
     } else if (time === sunset) {
       this.setState({time: 'sunset'})
@@ -76,7 +82,10 @@ class App extends Component {
                 searchValue={this.state.searchValue} lat={this.state.lat} lon={this.state.lon} resetBackground={this.resetBackground} />} />
             <Route path="/weather/:name/:lat/:lon" render={(props) => 
               <WeatherScreen {...props} searchValue={this.state.searchValue} setTimeAndRain={this.setTimeAndRain} />} />
+            <Route path="/favorite" render={(props) => <FavoriteScreen {...props} resetBackground={this.resetBackground} />} />
           </Suspense>
+          <div className="bg-start__top"></div>
+          <div className="bg-start__bottom"><canvas id="starfield" width="1500" height="1500"></canvas></div>
         </div>
       </Router>
     )

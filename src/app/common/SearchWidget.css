@@ -1,30 +1,44 @@
+.search-title {
+  margin-bottom: 20px;
+  font-size: 1.7em;
+}
+
+@media (min-width: 768px) {
+  .search-title {
+    font-size: 2em;
+  }
+}
+
 .search-form {
   padding: 0 5%;
+  margin-top: 20vh;
 }
 
 .search-box {
-  border: 1px solid #ccc;
-  padding: 10px 0;
+  padding: 10px 0 10px 10px;
   display: grid;
   grid-template: auto / auto 50px 50px;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 30px;
+  background: #fff;
+  box-shadow: 0px 4px 6px 0px rgb(0 0 0 / 20%), 0px 6px 6px 0px rgb(255 255 255 / 20%);
 }
 
 .search-box--with-suggestions:focus-within, .suggest-list:active ~ .search-box--with-suggestions {
   border-bottom: 0;
+  border-radius: 10px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-header .search-box {
+.App:not(.bg-start) header .search-box {
   border: 0;
   background: rgb(255 255 255 / 50%);
 }
 
 .search-input {
   border: 0;
-  width: 130px;
+  width: 125px;
 }
 
 @media (min-width: 375px) {
@@ -51,15 +65,14 @@ header .search-box {
 }
 
 .suggest-list--active {
-  border: solid 1px #ccc;
   border-top: 0;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
   background: #fff;
 }
 
 .App-header .suggest-list {
-  width: calc(100% - 90px);
+  width: calc(100% - 85px);
 }
 
 @media (min-width: 375px) {

@@ -70,6 +70,19 @@ export function makeItClear() {
   while (el.firstChild) el.removeChild(el.firstChild)
 }
 
+export function makeItStarry(canvasId) {
+  let canvas = document.getElementById(canvasId),
+  context = canvas.getContext("2d"),
+  stars = 200
+
+  for (var i = 0; i < stars; i++) {
+    let x = Math.random() * canvas.offsetWidth
+    let y = Math.random() * canvas.offsetHeight
+    context.fillStyle = "white"
+    context.fillRect(x,y,1,1)
+  }
+}
+
 export function capitalizeText(s) {
   return s.length ? s[0].toUpperCase() + s.substr(1) : s
 }

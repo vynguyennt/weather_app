@@ -121,7 +121,7 @@ class SearchWidget extends Component {
         </div>
         <ul className={'suggest-list' + (this.state.suggestions.length ? ' suggest-list--active' : '')}>
           {
-            this.state.suggestions && this.state.suggestions.map(city => (
+            this.state.suggestions.map((city = {}) => (
               <li key={city.id} className="suggest-list__item" onClick={this.selectCity} 
               data-name={city.name} data-lat={city.latitude} data-lon={city.longitude}>
                 {city.name} ({city.region})

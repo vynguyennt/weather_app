@@ -5,6 +5,7 @@ import SearchWidget from './SearchWidget'
 
 function Header(props) {
   const path = props.location.pathname.slice(1)
+  const favoriteLocations = JSON.parse(window.localStorage.getItem('favoriteLocations')) || []
   function handleSearch(searchValue, lat, lon) {
     searchValue = searchValue.trim()
     props.setSearchValue(searchValue)
@@ -14,8 +15,8 @@ function Header(props) {
     }
   }
   return (
-    <header className="App-header">
-      <Link to="/"><div className="App-logo" alt="logo" /></Link>
+    <header className={'App-header ' + (path.length > 0 ? '' : 'start-header')}>
+      <Link to={favoriteLocations.length ? '/favorite' : '/'}><div className="App-logo" alt="logo" /></Link>
       {
         path.length > 0 &&
         <SearchWidget showTitle={false} handleSearch={handleSearch} searchValue={props.searchValue || ''} />
