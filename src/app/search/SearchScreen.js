@@ -6,7 +6,7 @@ function SearchScreen(props) {
 
   useEffect(() => {
     if (props.searchValue) {
-      fetch(`http://api.openweathermap.org/data/2.5/weather?q=${props.searchValue}&appid=dd7b078955b9a8f743b67fdd8db9a012&units=metric`)
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${props.searchValue}&appid=dd7b078955b9a8f743b67fdd8db9a012&units=metric`)
       .then(res => res.json())
       .then(data => {
         setLocation(data)

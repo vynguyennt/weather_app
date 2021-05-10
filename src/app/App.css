@@ -84,6 +84,7 @@ header.start-header .App-logo {
   outline: 0;
   vertical-align: middle;
   color: #999;
+  cursor: pointer;
 }
 
 .bg-dawn .icon-btn, .bg-sunset .icon-btn, .bg-dusk .icon-btn, 

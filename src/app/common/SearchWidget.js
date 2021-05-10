@@ -8,8 +8,10 @@ class SearchWidget extends Component {
     this.state = { 
       searchValue: props.searchValue ? props.searchValue : '',
       suggestions: [],
+      activeLocation: 0,
       selected: false
     }
+    this.suggestListRef = React.createRef()
   }
 
   _isMounted = false
@@ -24,20 +26,22 @@ class SearchWidget extends Component {
   }
 
   getLocationSuggestion = debounce((value) => {
-    this.setState({selected: false, suggestions: []}, () => {
+    this.setState({selected: false, suggestions: [], activeLocation: 0}, () => {
       if (value && value.trim().length) {
         this.getSuggestions = fetch(`https://restcountries.eu/rest/v2/name/${value}`)
         .then(res => res.json())
         .then(data => {
           if (this._isMounted) {
             this.setState((state, props) => {
-              if (!state.selected && !data.status) return {suggestions: data.map(country => ({
-                id: country.alpha3Code,
-                name: country.name,
-                region: country.region,
-                latitude: country.latlng[0],
-                longitude: country.latlng[1]
-              }))}
+              if (!state.selected && !data.status) return {
+                suggestions: data.map(country => ({
+                  id: country.alpha3Code,
+                  name: country.name,
+                  region: country.region,
+                  latitude: country.latlng[0],
+                  longitude: country.latlng[1]
+                }))
+              }
               return {suggestions: []}
             })
           }
@@ -52,7 +56,7 @@ class SearchWidget extends Component {
         .then(res => res.json())
         .then(data => {
           if (this._isMounted) {
-            this.setState((state, props) => {
+            this.setState((state) => {
               if (!state.selected) return {suggestions: state.suggestions.concat(data.data)}
               return {suggestions: []}
             })
@@ -104,9 +108,49 @@ class SearchWidget extends Component {
     })
   }
 
+  handleKeySelectLocation = (event) => {
+    if (event.keyCode === 13) {
+      this.setState((state) => ({
+        searchValue: state.suggestions[state.activeLocation].name,
+        lat: state.suggestions[state.activeLocation].latitude,
+        lon: state.suggestions[state.activeLocation].longitude,
+        suggestions: [],
+        selected: true
+      }), () => {
+        this.getLocationSuggestion(true, null)
+        this.props.handleSearch(this.state.searchValue, this.state.lat, this.state.lon)
+      })
+    } else if (event.keyCode === 40) {
+      this.setState((state) => {
+        if (state.activeLocation == state.suggestions.length - 1) {
+          return {activeLocation: 0}
+        }
+        return {activeLocation: state.activeLocation + 1}
+      }, callback)
+    } else if (event.keyCode === 38) {
+      this.setState((state) => {
+        if (state.activeLocation == 0) {
+          return {activeLocation: state.suggestions.length - 1}
+        }
+        return {activeLocation: state.activeLocation - 1}
+      }, callback)
+    }
+
+    function callback() {
+      let elHeight = 38
+      let scrollTop = this.suggestListRef.current.scrollTop
+      let viewport = scrollTop + 300
+      let elOffset = elHeight * this.state.activeLocation
+      
+      if (elOffset < scrollTop || (elOffset + elHeight) > viewport) {
+        this.suggestListRef.current.scrollTop = elOffset
+      }
+    }
+  }
+
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className="search-form">
+      <form onSubmit={this.handleSubmit} onKeyUp={this.handleKeySelectLocation} className="search-form">
         {this.props.showTitle &&
           <h1 className="search-title">Check weather at ...</h1>
         }
@@ -119,11 +163,11 @@ class SearchWidget extends Component {
             <i className="material-icons">search</i>
           </button>
         </div>
-        <ul className={'suggest-list' + (this.state.suggestions.length ? ' suggest-list--active' : '')}>
+        <ul className={'suggest-list' + (this.state.suggestions.length ? ' suggest-list--active' : '')} ref={this.suggestListRef}>
           {
-            this.state.suggestions.map((city = {}) => (
-              <li key={city.id} className="suggest-list__item" onClick={this.selectCity} 
-              data-name={city.name} data-lat={city.latitude} data-lon={city.longitude}>
+            this.state.suggestions.map((city = {}, index) => (
+              <li key={city.id} className={'suggest-list__item ' + (index === this.state.activeLocation ? 'suggest-list__item--active': '')} 
+              onClick={this.selectCity} data-name={city.name} data-lat={city.latitude} data-lon={city.longitude}>
                 {city.name} ({city.region})
                 </li>
             ))

@@ -48,7 +48,7 @@ function WeatherWidget(props) {
   return (
     <Link to={`/weather/${props.data.name}/${props.data.coord.lat}/${props.data.coord.lon}`} className={'weather-widget bg-' + time}>
       <div className="weather-widget__status">
-        <img src={"http://openweathermap.org/img/wn/" + props.data.weather[0].icon + "@2x.png"} alt="" className="weather-icon weather-status__icon" />
+        <img src={"https://openweathermap.org/img/wn/" + props.data.weather[0].icon + "@2x.png"} alt="" className="weather-icon weather-status__icon" />
       </div>
       <button type="button" className="icon-btn save-location-btn weather-widget__btn" 
         onClick={(e) => removeFavorite(e, props.data.coord.lat, props.data.coord.lon)}>

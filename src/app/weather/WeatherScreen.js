@@ -216,7 +216,7 @@ function WeatherScreen(props) {
                   {location.daily.map(day => (
                     <li className="daily-forecast__item" key={day.dt}>
                       <p>{DateTime.fromJSDate(new Date(day.dt * 1000)).setZone(location.timezone).weekdayShort}</p>
-                      <img src={"http://openweathermap.org/img/wn/" + day.weather[0].icon + "@2x.png"} alt="" className="weather-icon daily-forecast__icon" />
+                      <img src={"https://openweathermap.org/img/wn/" + day.weather[0].icon + "@2x.png"} alt="" className="weather-icon daily-forecast__icon" />
                       <p>{Math.round(day.temp.min)}&deg; - {Math.round(day.temp.max)}&deg;</p>
                     </li>
                   ))}
