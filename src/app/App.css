@@ -82,13 +82,13 @@ small {
 .bg-start:before {
   content: '';
   position: absolute;
-  top: -140px;
-  left: -140px;
-  width: 310px;
-  height: 310px;
+  top: -130px;
+  left: -130px;
+  width: 340px;
+  height: 340px;
   border-radius: 50%;
   background: #ffdfa5;
-  border: solid 80px #fbe4bc;
+  border: solid 90px #fbe4bc;
   z-index: -1;
   box-shadow: 0 0 20px 3px #fbe4bc;
 }
@@ -96,10 +96,10 @@ small {
 .bg-start:after {
   content: '';
   position: absolute;
-  top: -240px;
-  left: -240px;
-  width: 500px;
-  height: 500px;
+  top: -230px;
+  left: -230px;
+  width: 530px;
+  height: 530px;
   border-radius: 50%;
   background: rgb(236 223 199);
   z-index: -2;
