@@ -12,6 +12,7 @@
 .search-form {
   padding: 0 5%;
   margin-top: 20vh;
+  position: relative;
 }
 
 .search-box {
@@ -38,10 +39,15 @@
 
 .search-input {
   border: 0;
-  width: 125px;
 }
 
-@media (min-width: 375px) {
+@media (max-width: 360px) {
+  .search-input {
+    width: 125px;
+  }
+}
+
+@media (min-width: 414px) {
   .search-input {
     width: auto;
   }
@@ -58,7 +64,7 @@
   height: 0;
   position: absolute;
   z-index: 999;
-  width: calc(90% - 27px);
+  width: 90%;
   opacity: 0;
   color: #444;
   transition: all 0.3s;
@@ -72,13 +78,7 @@
 }
 
 .App-header .suggest-list {
-  width: calc(100% - 85px);
-}
-
-@media (min-width: 375px) {
-  .App-header .suggest-list {
-    width: calc(100% - 100px);
-  }
+  width: 100%;
 }
 
 .search-box:focus-within + .suggest-list, .suggest-list:active {

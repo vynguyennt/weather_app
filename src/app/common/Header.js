@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from "react-router-dom"
 import { withRouter } from "react-router-dom";
 import SearchWidget from './SearchWidget'
+import './Header.css'
 
 function Header(props) {
   const path = props.location.pathname.slice(1)
@@ -16,10 +17,18 @@ function Header(props) {
   }
   return (
     <header className={'App-header ' + (path.length > 0 ? '' : 'start-header')}>
-      <Link to={favoriteLocations.length ? '/favorite' : '/'}><div className="App-logo" alt="logo" /></Link>
       {
-        path.length > 0 &&
-        <SearchWidget showTitle={false} handleSearch={handleSearch} searchValue={props.searchValue || ''} />
+        path.length > 0 ?
+        (
+          <React.Fragment>
+            <SearchWidget showTitle={false} handleSearch={handleSearch} searchValue={props.searchValue || ''} />
+            <Link to="/favorite" className="favorite-link icon-btn">
+              <i className="material-icons">grid_view</i>
+            </Link>
+          </React.Fragment>
+        ) : (
+          <Link to="/"><div className="App-logo" alt="logo" /></Link>
+        )
       }
     </header>
   )

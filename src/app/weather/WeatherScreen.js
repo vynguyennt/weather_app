@@ -136,7 +136,7 @@ function WeatherScreen(props) {
             {capitalizeText(location.current.weather[0].description)}
           </h3>
         </section>
-        <section className={'weather-details ' + (isScrollable ? '' : 'show-more')}>
+        <section className={'weather-details ' + (isScrollable ? '' : 'show-all')}>
           {
             [
               'M0, 50 C150, 120 350,  0 500, 70 L500, 250 L0, 250 Z',
@@ -154,7 +154,8 @@ function WeatherScreen(props) {
             ))
           }
 
-          <div className={'show-more-btn ' + (isScrollable ? '' : 'hidden')} onClick={toggleMoreDetails}></div>
+          {/* <div className={'show-more-btn ' + (isScrollable ? '' : 'hidden')} onClick={toggleMoreDetails}></div> */}
+          <div className="show-more-btn hidden" onClick={toggleMoreDetails}></div>
           <button type="button" className="icon-btn save-location-btn" onClick={updateFavorite}>
             {isFavorite ? (
               <i className="material-icons">favorite</i>

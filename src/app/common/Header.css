@@ -1,0 +1,42 @@
+header {
+  display: grid;
+  grid-template: auto / auto 60px;
+  max-width: calc(100vw - 30px);
+  z-index: 9;
+}
+
+header.start-header {
+  grid-template: auto / 100px auto;
+}
+
+header .search-form {
+  padding: 0;
+  margin: 0;
+}
+
+.App-logo {
+  height: 50px;
+  background: url('../../logo.png') no-repeat center;
+  background-size: contain;
+}
+
+header.start-header .App-logo {
+  height: 80px;
+}
+
+.bg-dawn .App-logo, .bg-sunset .App-logo, .bg-dusk .App-logo, 
+.bg-night .App-logo, .bg-rain .App-logo, .bg-storm .App-logo {
+  background: url('../../logo-light.png') no-repeat center;
+  background-size: contain;
+}
+
+.favorite-link {
+  justify-self: end;
+  width: 47px;
+  height: 47px;
+  padding: 11px 5px 5px;
+  text-align: center;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 50%);
+  box-shadow: 0px 4px 6px 0px rgb(0 0 0 / 20%), 0px 6px 6px 0px rgb(255 255 255 / 20%);
+}

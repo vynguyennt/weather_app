@@ -109,7 +109,7 @@ class SearchWidget extends Component {
   }
 
   handleKeySelectLocation = (event) => {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 && this.state.suggestions.length) {
       this.setState((state) => ({
         searchValue: state.suggestions[state.activeLocation].name,
         lat: state.suggestions[state.activeLocation].latitude,

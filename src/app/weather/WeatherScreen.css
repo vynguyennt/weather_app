@@ -10,7 +10,7 @@
   transition: all 0.3s;
 }
 
-@media (min-height: 600px) {
+@media (min-height: 700px) {
   .weather-summary.show-more {
     margin-top: 10px;
   }
@@ -66,10 +66,17 @@
   transition: all 0.3s;
 }
 
-@media (min-height: 600px) {
+.weather-details.show-all {
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 20px;
+}
+
+@media (min-height: 700px) {
   .weather-details.show-more {
     position: absolute;
-    bottom: -20px;
+    bottom: 0;
+    padding-bottom: 100px;
   }
 }
 
@@ -89,8 +96,8 @@
 }
 
 .show-more-btn {
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
   position: absolute;
   top: -15px;
   left: calc(50% - 5px);
@@ -110,7 +117,7 @@
   transform: rotate(225deg);
 }
 
-@media (max-height: 600px) {
+@media (max-height: 700px) {
   .show-more-btn {
     display: none;
   }
@@ -119,8 +126,6 @@
 @media(min-width: 768px) {
   .show-more-btn {
     top: -40px;
-    width: 15px;
-    height: 15px;
   }
 }
 
