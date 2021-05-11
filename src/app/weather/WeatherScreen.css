@@ -203,6 +203,10 @@ svg.wavy-border {
   padding: 10px 20px;
 }
 
+.VictoryContainer svg {
+  max-height: 160px;
+}
+
 /* Daily Forecast section */
 .daily-forecast {
   grid-area: daily;
