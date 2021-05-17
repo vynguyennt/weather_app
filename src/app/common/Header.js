@@ -6,7 +6,6 @@ import './Header.css'
 
 function Header(props) {
   const path = props.location.pathname.slice(1)
-  const favoriteLocations = JSON.parse(window.localStorage.getItem('favoriteLocations')) || []
   function handleSearch(searchValue, lat, lon) {
     searchValue = searchValue.trim()
     props.setSearchValue(searchValue)
@@ -15,6 +14,7 @@ function Header(props) {
       props.history.push(`/weather/${searchValue}/${lat}/${lon}`)
     }
   }
+
   return (
     <header className={'App-header ' + (path.length > 0 ? '' : 'start-header')}>
       {
@@ -22,12 +22,18 @@ function Header(props) {
         (
           <React.Fragment>
             <SearchWidget showTitle={false} handleSearch={handleSearch} searchValue={props.searchValue || ''} />
-            <Link to="/favorite" className="favorite-link icon-btn">
-              <i className="material-icons">grid_view</i>
+            <Link to={path === 'favorite' ? '/' : '/favorite'} className="favorite-link icon-btn">
+              <i className="material-icons">{path === 'favorite' ? 'home' : 'grid_view'}</i>
             </Link>
           </React.Fragment>
         ) : (
-          <Link to="/"><div className="App-logo" alt="logo" /></Link>
+          <React.Fragment>
+            <Link to="/"><div className="App-logo" alt="logo" /></Link>
+            <Link to="favorite" className="favorite-link icon-btn">
+              <i className="material-icons">grid_view</i>
+            </Link>
+          </React.Fragment>
+          
         )
       }
     </header>

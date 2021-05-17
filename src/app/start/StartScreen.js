@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect, } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import SearchWidget from '../common/SearchWidget'
 
 class StartScreen extends Component {
