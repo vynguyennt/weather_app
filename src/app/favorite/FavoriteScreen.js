@@ -29,7 +29,9 @@ function FavoriteScreen(props) {
     <div className="screen favorite-screen">
       <div className="widgets-list">
         {
+          locations.length ?
           locations.map(location => <WeatherWidget data={location} key={location.id} />) 
+          : (<span className="info-msg"><i>No locations saved</i></span>)
         }
       </div>
     </div>

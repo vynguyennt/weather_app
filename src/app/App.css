@@ -62,6 +62,13 @@ small {
   align-self: self-start;
 }
 
+.info-msg {
+  color: #777;
+  padding: 15px;
+  display: block;
+  text-align: center;
+}
+
 /* Widget List */
 .widgets-list {
   display: flex;

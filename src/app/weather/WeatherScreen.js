@@ -112,7 +112,7 @@ function WeatherScreen(props) {
   return noResult ?
     (
       <div className="screen">
-        <h2>No data found</h2>
+        <span className="info-msg"><i>No data found</i></span>
       </div>
     ) : (
       <div className="screen weather-screen" ref={screenEl}>
