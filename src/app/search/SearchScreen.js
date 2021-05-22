@@ -1,12 +1,14 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import WeatherWidget from '../common/WeatherWidget'
+import { useAppId } from '../App'
 
 function SearchScreen(props) {
+  const appId = useAppId()
   let [location, setLocation] = useState({})
 
   useEffect(() => {
     if (props.searchValue) {
-      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${props.searchValue}&appid=dd7b078955b9a8f743b67fdd8db9a012&units=metric`)
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${props.searchValue}&appid=${appId}&units=metric`)
       .then(res => res.json())
       .then(data => {
         setLocation(data)

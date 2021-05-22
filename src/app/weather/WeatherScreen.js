@@ -1,13 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { DateTime } from 'luxon'
 import { VictoryChart, VictoryLine, VictoryContainer, VictoryAxis } from 'victory'
 import { makeItRain, makeItSnow, makeItClear, capitalizeText } from '../common/Utils'
+import { useAppId } from '../App'
+import { PageLoader } from '../common/Loaders'
 import './WeatherScreen.css'
 
 function WeatherScreen(props) {
+  const appId = useAppId()
   let { name, lat, lon } = useParams()
   let [noResult, setNoResult] = useState(false)
+  let [loading, setLoading] = useState(false)
   let [location, setLocation] = useState({
     lat: 0,
     lon: 0,
@@ -44,9 +48,10 @@ function WeatherScreen(props) {
   const screenEl = useRef(null) 
 
   useEffect(() => {
+    setLoading(true)
     setIsFavorite(checkIsFavorite())
     makeItClear()
-    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,alerts&appid=dd7b078955b9a8f743b67fdd8db9a012&units=metric`)
+    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,alerts&appid=${appId}&units=metric`)
       .then(res => res.json())
       .then(data => {
         if (data.cod) {
@@ -63,11 +68,15 @@ function WeatherScreen(props) {
             DateTime.fromJSDate(new Date(data.current[time] * 1000)).setZone(data.timezone).hour)
           props.setTimeAndRain(currentTime, sunrise, sunset, !!(data.current.rain))
         }
+        setLoading(false)
         if(screenEl.current.clientHeight <= window.innerHeight) {
           setIsScrollable(false)
         }
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        console.log(error)
+        setLoading(false)
+      })
   }, [props.searchValue, lat, lon])
 
   function checkIsFavorite() {
@@ -109,7 +118,7 @@ function WeatherScreen(props) {
     document.getElementsByClassName('weather-details')[0].classList.toggle('show-more')
   }
 
-  return noResult ?
+  return loading ? <PageLoader /> : noResult ?
     (
       <div className="screen">
         <span className="info-msg"><i>No data found</i></span>

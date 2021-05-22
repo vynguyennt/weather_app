@@ -1,12 +1,18 @@
-import React, { Component, Suspense, lazy } from 'react'
+import React, { Component, Suspense, lazy, useContext } from 'react'
 import { HashRouter as Router, Route } from "react-router-dom"
 import './App.css'
 import { makeItStarry } from './common/Utils'
 import Header from './common/Header'
-import Loading from './common/Loading'
+import { PageLoader } from './common/Loaders'
 const StartScreen = lazy(() => import('./start/StartScreen'))
 const WeatherScreen = lazy(() => import('./weather/WeatherScreen'))
 const FavoriteScreen = lazy(() => import('./favorite/FavoriteScreen'))
+
+const OpenweatherAppIdContext = React.createContext('')
+
+export function useAppId() {
+  return useContext(OpenweatherAppIdContext)
+}
 
 class App extends Component {
   constructor(props) {
@@ -73,20 +79,22 @@ class App extends Component {
     }
     return (
       <Router>
-        <div className={`App bg-${this.state.time} ${this.state.rain ? 'bg-rain' : ''}`}>
-          <Header setSearchValue={this.setSearchValue} setLocation={this.setLocation} 
-            searchValue={this.state.searchValue} lat={this.state.lat} lon={this.state.lon} />
-          <Suspense fallback={<Loading/>}>
-            <Route path="/" exact render={(props) => 
-              <StartScreen {...props} setSearchValue={this.setSearchValue} setLocation={this.setLocation} 
-                searchValue={this.state.searchValue} lat={this.state.lat} lon={this.state.lon} resetBackground={this.resetBackground} />} />
-            <Route path="/weather/:name/:lat/:lon" render={(props) => 
-              <WeatherScreen {...props} searchValue={this.state.searchValue} setTimeAndRain={this.setTimeAndRain} />} />
-            <Route path="/favorite" render={(props) => <FavoriteScreen {...props} resetBackground={this.resetBackground} />} />
-          </Suspense>
-          <div className="bg-start__top"></div>
-          <div className="bg-start__bottom"><canvas id="starfield" width="1500" height="1500"></canvas></div>
-        </div>
+        <OpenweatherAppIdContext.Provider value="dd7b078955b9a8f743b67fdd8db9a012">
+          <div className={`App bg-${this.state.time} ${this.state.rain ? 'bg-rain' : ''}`}>
+            <Header setSearchValue={this.setSearchValue} setLocation={this.setLocation} 
+              searchValue={this.state.searchValue} lat={this.state.lat} lon={this.state.lon} />
+            <Suspense fallback={<PageLoader/>}>
+              <Route path="/" exact render={(props) => 
+                <StartScreen {...props} setSearchValue={this.setSearchValue} setLocation={this.setLocation} 
+                  searchValue={this.state.searchValue} lat={this.state.lat} lon={this.state.lon} resetBackground={this.resetBackground} />} />
+              <Route path="/weather/:name/:lat/:lon" render={(props) => 
+                <WeatherScreen {...props} searchValue={this.state.searchValue} setTimeAndRain={this.setTimeAndRain} />} />
+              <Route path="/favorite" render={(props) => <FavoriteScreen {...props} resetBackground={this.resetBackground} />} />
+            </Suspense>
+            <div className="bg-start__top"></div>
+            <div className="bg-start__bottom"><canvas id="starfield" width="1500" height="1500"></canvas></div>
+          </div>
+        </OpenweatherAppIdContext.Provider>
       </Router>
     )
   }
