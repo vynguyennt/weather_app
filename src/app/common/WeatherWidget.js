@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { DateTime } from 'luxon'
 import { SectionLoader } from '../common/Loaders'
+import { isDarkBg } from '../common/Utils'
 
 import './WeatherWidget.css'
 
@@ -50,7 +51,8 @@ function WeatherWidget(props) {
   }, [props.data, props.loading])
 
   return (
-    <Link to={`/weather/${props.data.name}/${props.data.lat}/${props.data.lon}`} className={'weather-widget bg-' + time}>
+    <Link to={`/weather/${props.data.name}/${props.data.lat}/${props.data.lon}`} 
+      className={'weather-widget bg-' + time + (isDarkBg(time) ? ' bg-dark' : '')}>
       {
         props.loading ? <SectionLoader /> :
         (

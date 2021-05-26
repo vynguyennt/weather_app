@@ -185,6 +185,10 @@ svg.wavy-border {
   color: #444;
 }
 
+.weather-screen .save-location-btn:hover {
+  color: #bbb;
+}
+
 @media(min-width: 768px) {
   .weather-screen .save-location-btn {
     top: -55px;

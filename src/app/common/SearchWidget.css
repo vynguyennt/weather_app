@@ -57,6 +57,10 @@
   border-right: 1px solid #ccc;
 }
 
+.bg-dark .current-location-btn, .bg-rain .current-location-btn {
+  border-color: #fff;
+}
+
 .suggest-list {
   margin: 0;
   padding: 0;

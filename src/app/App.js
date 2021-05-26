@@ -1,7 +1,7 @@
 import React, { Component, Suspense, lazy, useContext } from 'react'
 import { HashRouter as Router, Route } from "react-router-dom"
 import './App.css'
-import { makeItStarry } from './common/Utils'
+import { makeItStarry, isDarkBg } from './common/Utils'
 import Header from './common/Header'
 import { PageLoader } from './common/Loaders'
 const StartScreen = lazy(() => import('./start/StartScreen'))
@@ -80,7 +80,7 @@ class App extends Component {
     return (
       <Router>
         <OpenweatherAppIdContext.Provider value="dd7b078955b9a8f743b67fdd8db9a012">
-          <div className={`App bg-${this.state.time} ${this.state.rain ? 'bg-rain' : ''}`}>
+          <div className={`App bg-${this.state.time} ${this.state.rain ? 'bg-rain' : ''} ${isDarkBg(this.state.time) ? 'bg-dark' : ''}`}>
             <Header setSearchValue={this.setSearchValue} setLocation={this.setLocation} 
               searchValue={this.state.searchValue} lat={this.state.lat} lon={this.state.lon} />
             <Suspense fallback={<PageLoader/>}>

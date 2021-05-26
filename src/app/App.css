@@ -49,10 +49,15 @@ small {
   vertical-align: middle;
   color: #999;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
 .bg-dawn .icon-btn, .bg-sunset .icon-btn, .bg-dusk .icon-btn, .bg-night .icon-btn, .bg-rain .icon-btn, .bg-storm .icon-btn {
   color: #fff;
+}
+
+.App .icon-btn:hover {
+  color: #bbb;
 }
 
 .icon-btn[disabled] {

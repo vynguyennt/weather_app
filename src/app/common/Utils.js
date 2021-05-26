@@ -86,3 +86,8 @@ export function makeItStarry(canvasId) {
 export function capitalizeText(s) {
   return s.length ? s[0].toUpperCase() + s.substr(1) : s
 }
+
+export function isDarkBg(time) {
+  if (['dawn', 'sunset', 'dusk', 'night', 'rain', 'storm'].includes(time)) return true
+  return false
+}
