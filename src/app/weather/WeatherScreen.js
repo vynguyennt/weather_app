@@ -54,6 +54,7 @@ function WeatherScreen(props) {
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,alerts&appid=${appId}&units=metric`)
       .then(res => res.json())
       .then(data => {
+        setLoading(false)
         if (data.cod) {
           setNoResult(true)
         } else {
@@ -68,7 +69,6 @@ function WeatherScreen(props) {
             DateTime.fromJSDate(new Date(data.current[time] * 1000)).setZone(data.timezone).hour)
           props.setTimeAndRain(currentTime, sunrise, sunset, !!(data.current.rain))
         }
-        setLoading(false)
         if(screenEl.current.clientHeight <= window.innerHeight) {
           setIsScrollable(false)
         }
