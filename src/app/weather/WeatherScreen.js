@@ -52,9 +52,9 @@ function WeatherScreen(props) {
     setIsFavorite(checkIsFavorite())
     makeItClear()
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,alerts&appid=${appId}&units=metric`)
+      .finally(() => setLoading(false))
       .then(res => res.json())
       .then(data => {
-        setLoading(false)
         if (data.cod) {
           setNoResult(true)
         } else {
@@ -75,7 +75,6 @@ function WeatherScreen(props) {
       })
       .catch(error => {
         console.log(error)
-        setLoading(false)
       })
   }, [props.searchValue, lat, lon])
 

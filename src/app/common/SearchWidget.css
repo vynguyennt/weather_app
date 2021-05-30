@@ -57,7 +57,7 @@
   border-right: 1px solid #ccc;
 }
 
-.bg-dark .current-location-btn, .bg-rain .current-location-btn {
+.bg-dark .current-location-btn {
   border-color: #fff;
 }
 

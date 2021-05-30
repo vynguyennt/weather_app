@@ -52,7 +52,7 @@ small {
   transition: all 0.3s;
 }
 
-.bg-dawn .icon-btn, .bg-sunset .icon-btn, .bg-dusk .icon-btn, .bg-night .icon-btn, .bg-rain .icon-btn, .bg-storm .icon-btn {
+.bg-dark .icon-btn {
   color: #fff;
 }
 
