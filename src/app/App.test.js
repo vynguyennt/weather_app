@@ -1,8 +1,8 @@
-import React from 'react';
-import App from './App';
-import { render } from '@testing-library/react';
+import React from 'react'
+import App from './App'
+import { render } from '@testing-library/react'
 
-jest.mock('./common/Utils');
+jest.mock('./common/Utils')
 
 it('renders without crashing', () => {
   const { container } = render(<App />)
